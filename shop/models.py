@@ -84,7 +84,7 @@ class Cart(models.Model):
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='cart', on_delete=models.CASCADE)
     part = models.ForeignKey(Part, related_name='part', on_delete=models.CASCADE)
-    quantity = models.IntegerField(max_length=10)
+    quantity = models.IntegerField()
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -95,7 +95,6 @@ class CartItem(models.Model):
 
 # define the Order model
 class Order(models.Model):
-    order_status = ('Received', 'Processing', 'Shipped', 'Delivered', 'Back Order')
     order_number = models.AutoField(primary_key=True, )
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -106,7 +105,7 @@ class Order(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=10)
-    status = models.CharField(max_length=25, choices=order_status, default='Received')
+    status = models.CharField(max_length=25, choices=[('R', 'Received'), ('P','Processing'), ('S','Shipped'), ('D','Delivered'), ('B','Back Order')], default='Received')
     comments = models.CharField(max_length=200)
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(auto_now_add=True)
@@ -126,8 +125,8 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='order', on_delete=models.CASCADE)
-    part = models.ForeignKey(Part, related_name='part', on_delete=models.CASCADE)
-    quantity = models.IntegerField(max_length=10)
+    part = models.ForeignKey(Part, related_name='order_part', on_delete=models.CASCADE)
+    quantity = models.IntegerField()
     created_date = models.DateTimeField(default=timezone.now)
 
     def created(self):
