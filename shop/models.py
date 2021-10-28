@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 
+
 # Create your models here.
 
 # Customer model
@@ -29,6 +30,7 @@ class Customer(models.Model):
     def __str__(self):
         return '%s, %s' % (self.first_name, self.last_name)
 
+
 # PartType model (aka Category)
 
 class PartType(models.Model):
@@ -45,6 +47,7 @@ class PartType(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:part_list_by_category', args=[self.slug])
+
 
 # Part model
 
@@ -73,12 +76,14 @@ class Part(models.Model):
     class Meta:
         ordering = ('part_name',)
 
+
 # define the Cart model
 class Cart(models.Model):
     customer = models.ForeignKey(Customer, related_name='customer', on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.customer)
+
 
 # define the CartItem model used to store information about items in a cart
 class CartItem(models.Model):
@@ -93,6 +98,7 @@ class CartItem(models.Model):
     class Meta:
         ordering = ('cart',)
 
+
 # define the Order model
 class Order(models.Model):
     order_number = models.AutoField(primary_key=True, )
@@ -105,7 +111,9 @@ class Order(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=10)
-    status = models.CharField(max_length=25, choices=[('R', 'Received'), ('P','Processing'), ('S','Shipped'), ('D','Delivered'), ('B','Back Order')], default='Received')
+    status = models.CharField(max_length=25,
+                              choices=[('R', 'Received'), ('P', 'Processing'), ('S', 'Shipped'), ('D', 'Delivered'),
+                                       ('B', 'Back Order')], default='Received')
     comments = models.CharField(max_length=200)
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(auto_now_add=True)
@@ -121,7 +129,8 @@ class Order(models.Model):
     def __str__(self):
         return str(self.order_number)
 
-#define the order items
+
+# define the order items
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='order', on_delete=models.CASCADE)
