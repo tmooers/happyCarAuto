@@ -6,5 +6,6 @@ app_name = 'shop'
 urlpatterns = [
     path('', views.home, name='home'),
     re_path(r'^home/$', views.home, name='home'),
-    path('register/', views.register, name='register')
+    path('register/', views.register, name='register'),
+    path('parts/', views.ProductListView.as_view(), name='Products'),
 ]

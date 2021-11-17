@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .forms import NewUserForm
 from django.contrib.auth import login
 from django.contrib import messages
+from django.views import generic
 
 
 now = timezone.now()
@@ -24,3 +25,8 @@ def register(request):
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
     return render(request=request, template_name="registration/registration.html", context={"register_form": form})
+
+
+class ProductListView(generic.ListView):
+    model = Part
+    paginate_by = 5
