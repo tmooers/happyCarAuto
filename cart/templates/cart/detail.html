@@ -9,7 +9,6 @@ Shopping Cart
 <table class="cart">
     <thead>
     <tr>
-        <th>Image</th>
         <th>Part</th>
         <th>Quantity</th>
         <th>Remove</th>
@@ -21,11 +20,7 @@ Shopping Cart
     {% for item in cart %}
     {% with part=item.part %}
     <tr>
-        <td>
-            <a href="{{ part.get_absolute_url}}">
-            </a>
-        </td>
-        <td>{{ part.name }}</td>
+        <td>{{ part.part_name }}</td>
         <td>{{ item.quantity }}</td>
         <td>
             <form action="{% url "cart:cart_remove" part.id %}" method="post">
