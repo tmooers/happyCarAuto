@@ -1,9 +1,10 @@
 from .models import *
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NewUserForm
 from django.contrib.auth import login
 from django.contrib import messages
 from django.views import generic
+from cart.forms import CartAddProductForm
 
 
 now = timezone.now()
@@ -29,4 +30,14 @@ def register(request):
 
 class ProductListView(generic.ListView):
     model = Part
-    paginate_by = 5
+
+class CategorylistView(generic.ListView):
+    model = PartType
+
+class category_detail(generic.DetailView):
+    model = PartType
+
+def product_detail(request, id):
+    product=get_object_or_404(Part,id=id,availability=True)
+    cart_part_form = CartAddProductForm()
+    return render(request,'shop/part/detail.html',{'part':product,'cart_part_form':cart_part_form})
