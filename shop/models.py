@@ -148,3 +148,10 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return str(self.order)
+
+class NewsLetterUsers(models.Model):
+    email = models.EmailField()
+    date_added = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return self.email
