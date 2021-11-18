@@ -42,7 +42,11 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'crispy_forms',
     'cart.apps.CartConfig',
+    'newsletter',
+    'django.contrib.sites',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,3 +139,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #set cart session ID
 CART_SESSION_ID = 'cart'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'simranISQA3900@gmail.com'
+EMAIL_HOST_PASSWORD = 'Maverick@1'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+NEWSLETTER_THUMBNAIL = 'easy-thumbnails'
